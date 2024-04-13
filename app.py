@@ -1,7 +1,7 @@
 import pyrebase
 
 
-#@app.route('/<productname>')
+
 
 config = {
     "apiKey": "AIzaSyCvrfjVrBgcobvJgYcE_Yda7OrN3xbBhoQ",
@@ -20,9 +20,8 @@ config = {
 # ][]
 
 
-
-# read from firebase and give app the filtered result
-if __name__ == '__main__':
+#@app.route('/<productname>')
+def filter():
     firebase = pyrebase.initialize_app(config)
     database = firebase.database()
     data = database.child("users").get()
@@ -36,5 +35,11 @@ if __name__ == '__main__':
                       str(productname).lower() in product['product_name'].lower()]
 
     print("productsreturn ", productsreturn)
+    return productsreturn
+
+
+# read from firebase and give app the filtered result
+if __name__ == '__main__':
+    app.run()
 
 
