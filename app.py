@@ -1,14 +1,14 @@
 import pyrebase
-from flask import Flask
+from flask import Flask, jsonify
 
 app = Flask(__name__)
 
-@app.route('/')
+@app.route("/")
 def home():
     return "successfully called"
 
 
-@app.route('/<productname>')
+@app.route("/get/<productname>")
 def filter(productname):
     config = {
         "apiKey": "AIzaSyCvrfjVrBgcobvJgYcE_Yda7OrN3xbBhoQ",
@@ -29,11 +29,12 @@ def filter(productname):
 
     #productname = 'epal'
 
+    print("prod name ",productname)
     productsreturn = [(product['product_name'], product['price']) for product in data if
                       str(productname).lower() in product['product_name'].lower()]
 
     print("productsreturn ", productsreturn)
-    return "productsreturn"
+    return jsonify(productsreturn)
 
 
 
