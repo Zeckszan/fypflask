@@ -62,6 +62,7 @@ def filter(productname):
     }
     firebase = pyrebase.initialize_app(config)
     database = firebase.database()
+
     dataJaya = database.child("jaya grocer").get()
     dataVillage = database.child("village grocer").get()
     dataLotus = database.child("lotus").get()
@@ -73,31 +74,23 @@ def filter(productname):
     print(dataJaya)
     print(dataVillage)
     print(dataLotus)
-    #data = jsonify(data.val())
 
-    productname = "apple"
-    print("prod name ",productname)
     listJaya =['Jaya Grocer']
     pattern = re.compile(r'\b{}\b'.format(re.escape(productname)), re.IGNORECASE)
 
-    # Extend the list with the results of list comprehension
     listJaya.extend([(product['product_name'], product['price']) for product in dataJaya
                      if re.search(pattern, product['product_name'])])
-    print("jaya",listJaya)
 
     listVillage =['Village Grocer']
     listVillage.extend([(product['product_name'], product['price']) for product in dataVillage
                         if re.search(pattern, product['product_name'])])
 
     productname = english_to_malay[productname]
-
     listLotus =['Lotus']
     listLotus.extend([(product['product_name'], product['price']) for product in dataLotus
                       if re.search(pattern, product['product_name'])])
 
-    print("productsreturn ", listJaya+listVillage+listLotus)
     return listJaya+listVillage+listLotus
-    # return jsonify(productsreturn)
 
 
 
